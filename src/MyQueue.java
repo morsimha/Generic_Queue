@@ -55,93 +55,50 @@ public class MyQueue <T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        QueueIterator it = new QueueIterator();
-        return it;
+        //QueueIterator it2 = new QueueIterator();
+        // it2;
+        ArrayList<T> all = new ArrayList<T>();
+        for (int i = 1; i <= 10; i++)
+            all.addAll(q.get(i));
+        return all.iterator();
     }
 
-    private class QueueIterator implements Iterator<T> {
-        private int currListIndex;
-        private Iterator<T> myQueueIterator;
-
-        public QueueIterator() {
-            currListIndex = 1;
-            myQueueIterator = q.get(currListIndex).iterator();
-        }
-
-        @Override
-        public boolean hasNext() {
-            if (myQueueIterator.hasNext()) // if the current Iterator have more items in its linked list.
-                return true;
-            for (int i = currListIndex + 1; i <= 10; i++) { //otherwise, scan the next linked lists.
-                if (!q.get(i).isEmpty()) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        @Override
-        public T next() {
-            if (myQueueIterator.hasNext()) //when the current linked list still have items or first time.
-                return myQueueIterator.next();
-            for (int i = currListIndex + 1; i <= 10; i++) { //otherwise, scan the next linked lists.
-                if (!q.get(i).isEmpty()) {
-                    currListIndex = i;
-                    myQueueIterator = q.get(currListIndex).iterator();
-                    return myQueueIterator.next();
-                }
-            }
-            throw new NoSuchElementException();
-        }
-    }
-
-
-public static void main (String[]args) {
-    System.out.println("Hello world!");
-    MyQueue<String> q = new MyQueue<String>(10);
-
-
-    q.add("High priority element fourth", 5);
-    q.add("High priority element last_sixth", 10);
-    q.add("High priority element fifth", 5);
-    q.add("High priority element third", 2);
-
-    System.out.println("size is " + q.size());
-    Iterator<String> check = q.iterator();
-    System.out.println(check.hasNext());
-    System.out.println(check.next());
-    System.out.println(check.hasNext());
-    System.out.println(check.hasNext());
-    System.out.println(check.next());
-    System.out.println(check.hasNext());
-    System.out.println(check.next());
-    System.out.println(check.hasNext()+"\n");
-
-    q.add("High priority element higher_first", 1);
-    q.add("High priority element second", 1);
-
-
-
-    Iterator<String> it = q.iterator();
-
-
-    while(it.hasNext())
-        System.out.println(it.next());
-
-
-
-
-    ArrayList<String> b = new ArrayList<>(11);
-    b.add("hi");
-    b.add("bye");
-    Iterator<String> it2 = b.iterator();
-
-    System.out.println(it2.hasNext());
-    System.out.println(it2.next());
-    System.out.println(it2.hasNext());
-    System.out.println(it2.next());
-    System.out.println(it2.hasNext());
-
-
-}
+//    private class QueueIterator implements Iterator<T> {
+//        private int currListIndex;
+//        private Iterator<T> myQueueIterator;
+//        private int lastRet;
+//
+//        public QueueIterator() {
+//            currListIndex = 1;
+//            myQueueIterator = q.get(currListIndex).iterator();
+//            lastRet = -1; // index of last element returned; -1 if no such
+//        }
+//
+//        @Override
+//        public boolean hasNext() {
+//            if (myQueueIterator.hasNext()) // if the current Iterator have more items in its linked list.
+//                return true;
+//            for (int i = currListIndex + 1; i <= 10; i++) { //otherwise, scan the next linked lists.
+//                if (!q.get(i).isEmpty()) {
+//                    return true;
+//                }
+//            }
+//            return false;
+//        }
+//
+//        @Override
+//        public T next() {
+//            if (myQueueIterator.hasNext()) //when the current linked list still have items or first time.
+//                return myQueueIterator.next();
+//            for (int i = currListIndex + 1; i <= 10; i++) { //otherwise, scan the next linked lists.
+//                if (!q.get(i).isEmpty()) {
+//                    currListIndex = i;
+//                    lastRet = i;
+//                    myQueueIterator = q.get(currListIndex).iterator();
+//                    return myQueueIterator.next();
+//                }
+//            }
+//            throw new NoSuchElementException();
+//        }
+//    }
 }
