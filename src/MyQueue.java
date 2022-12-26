@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Queue;
+import java.util.NoSuchElementException;
 
 public class MyQueue <T> implements Iterable<T> {
     private ArrayList<LinkedList<T>> q;
@@ -53,114 +53,95 @@ public class MyQueue <T> implements Iterable<T> {
         return size;
     }
 
-
-
     @Override
     public Iterator<T> iterator() {
-        Iterator<T> it = new Iterator<T>() {
-            private int currentIndex = 1;
-
-            @Override
-            public boolean hasNext() {
-                for (int i = currentIndex; i <= maxPriority; i++) {
-                    try {
-                        return q.get(currentIndex).iterator().hasNext();
-                    }
-                    catch (Exception e){
-                        continue;
-                    }
-//                    if (q.get(currentIndex).iterator().hasNext())
-//                        return true;
-                }
-                return false;
-            }
-
-            @Override
-            public T next() {
-                for (int i = currentIndex; i <= maxPriority; i++) {
-                    try {
-                        return q.get(currentIndex).iterator().next();
-                    }
-                    catch (Exception e){
-                        continue;
-                    }
-                }
-                return null;
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+        QueueIterator it = new QueueIterator();
         return it;
     }
 
+    private class QueueIterator implements Iterator<T> {
+        private int currListIndex;
+        private Iterator<T> myQueueIterator;
+
+        public QueueIterator() {
+            currListIndex = 1;
+            myQueueIterator = q.get(currListIndex).iterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            if (myQueueIterator.hasNext()) // if the current Iterator have more items in its linked list.
+                return true;
+            for (int i = currListIndex + 1; i <= 10; i++) { //otherwise, scan the next linked lists.
+                if (!q.get(i).isEmpty()) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public T next() {
+            if (myQueueIterator.hasNext()) //when the current linked list still have items or first time.
+                return myQueueIterator.next();
+            for (int i = currListIndex + 1; i <= 10; i++) { //otherwise, scan the next linked lists.
+                if (!q.get(i).isEmpty()) {
+                    currListIndex = i;
+                    myQueueIterator = q.get(currListIndex).iterator();
+                    return myQueueIterator.next();
+                }
+            }
+            throw new NoSuchElementException();
+        }
+    }
 
 
-
-
-//
-//    @Override
-//    public Iterator<T> iterator() {
-//        return new MyQueueIterator();
-//    }
-//
-//    public class MyQueueIterator <T>  implements Iterator<T> {
-//        private int listIndex;
-//        private Iterator<T> listIterator;
-//
-//        public MyQueueIterator() {
-//            listIndex = 0;
-//            listIterator = q.get(listIndex).iterator();
-//        }
-//        @Override
-//        public boolean hasNext() {
-//            return q.get(listIndex).iterator();
-//        }
-//
-//        @Override
-//        public T next() {
-//            return null;
-//        }
-//    }
-
-public static void main (String[]args){
-        System.out.println("Hello world!");
+public static void main (String[]args) {
+    System.out.println("Hello world!");
     MyQueue<String> q = new MyQueue<String>(10);
 
 
-    q.add("High priority element",5);
-    q.add( "High priority element2",1);
-    System.out.println(q.size());
+    q.add("High priority element fourth", 5);
+    q.add("High priority element last_sixth", 10);
+    q.add("High priority element fifth", 5);
+    q.add("High priority element third", 2);
+
+    System.out.println("size is " + q.size());
+    Iterator<String> check = q.iterator();
+    System.out.println(check.hasNext());
+    System.out.println(check.next());
+    System.out.println(check.hasNext());
+    System.out.println(check.hasNext());
+    System.out.println(check.next());
+    System.out.println(check.hasNext());
+    System.out.println(check.next());
+    System.out.println(check.hasNext()+"\n");
+
+    q.add("High priority element higher_first", 1);
+    q.add("High priority element second", 1);
+
+
+
     Iterator<String> it = q.iterator();
-    while(it.hasNext()){
+
+
+    while(it.hasNext())
         System.out.println(it.next());
-    }
 
 
 
 
+    ArrayList<String> b = new ArrayList<>(11);
+    b.add("hi");
+    b.add("bye");
+    Iterator<String> it2 = b.iterator();
 
-    }
-//
-//        public Queue<T> getQ () {
-//            return q;
-//        }
-//
-//        public void setQ (Queue < T > q) {
-//            this.q = q;
-//        }
-//
-//        public int getPriority () {
-//            return maxPriority;
-//        }
-//
-//        public void setPriority ( int priority){
-//            maxPriority = priority;
-//        }
+    System.out.println(it2.hasNext());
+    System.out.println(it2.next());
+    System.out.println(it2.hasNext());
+    System.out.println(it2.next());
+    System.out.println(it2.hasNext());
 
-//    public static <E extends Reducable <E>>ArrayList<E> reduceAll(ArrayList<E> a){
-//        return a;
-//    }
+
+}
 }
