@@ -56,17 +56,10 @@ public class MyQueue <T> implements Iterable<T> {
         return size;
     }
 
-    public int getPrioirty(){
-        return currMaxPriority;
-    }
-
     @Override
     public Iterator<T> iterator() {
-        //return new QueueIterator();
-        ArrayList<T> all = new ArrayList<T>();
-        for (int i = 1; i <= MAX_PRIORITY; i++)
-            all.addAll(q.get(i));
-        return all.iterator();
+        return new QueueIterator();
+
     }
 
     private class QueueIterator implements Iterator<T> {
@@ -82,7 +75,7 @@ public class MyQueue <T> implements Iterable<T> {
         public boolean hasNext() {
             if (myQueueIterator.hasNext()) // if the current Iterator have more items in its linked list.
                 return true;
-            for (int i = currListIndex + 1; i <= 10; i++) { //otherwise, scan the next linked lists.
+            for (int i = currListIndex + 1; i <= MAX_PRIORITY; i++) { //otherwise, scan the next linked lists.
                 if (!q.get(i).isEmpty()) {
                     return true;
                 }
@@ -94,7 +87,7 @@ public class MyQueue <T> implements Iterable<T> {
         public T next() {
             if (myQueueIterator.hasNext()) //when the current linked list still have items or first time.
                 return myQueueIterator.next();
-            for (int i = currListIndex + 1; i <= 10; i++) { //otherwise, scan the next linked lists.
+            for (int i = currListIndex + 1; i <= MAX_PRIORITY; i++) { //otherwise, scan the next linked lists.
                 if (!q.get(i).isEmpty()) {
                     currListIndex = i;
                     myQueueIterator = q.get(currListIndex).iterator();

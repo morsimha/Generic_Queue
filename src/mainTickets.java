@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class mainTickets {
@@ -17,8 +16,6 @@ public class mainTickets {
         CustomersTickets l = new CustomersTickets("Charlie Puth", "276859447", "The coffee was super cold");
         CustomersTickets m = new CustomersTickets("Charlie Puth", "276859447", "The coffee was cold");
         CustomersTickets mistake = new CustomersTickets("Mr Oops", "000000000", "mistake");
-
-
 
         MyQueue<CustomersTickets> tickets = new MyQueue<CustomersTickets>(7);
         tickets.add(a, 1);
@@ -42,12 +39,7 @@ public class mainTickets {
 
         CustomersTickets prior = tickets.poll();
         System.out.println("\nThe most prioritize ticket was: " + prior.print());
-
-        // tickets.contains(it)
         System.out.println("Is it still there? " + tickets.contains(prior));
-
-
-
 
         Iterator<CustomersTickets> it = tickets.iterator();
         System.out.println("\nThis is the queue ordered by priority:");
@@ -59,9 +51,6 @@ public class mainTickets {
             i++;
         }
         it = tickets.iterator();
-
-
-
 
         Iterator<CustomersTickets> it2 = tickets.iterator();
         int j = 1;
