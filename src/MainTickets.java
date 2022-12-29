@@ -1,6 +1,6 @@
 import java.util.Iterator;
 
-public class mainTickets {
+public class MainTickets {
     public static void main(String[] args) {
         CustomersTickets a = new CustomersTickets("Charlie Puth", "276859447", "The coffee was cold!!!!!!!!!!!!!!!!!");
         CustomersTickets b = new CustomersTickets("Agata Christy", "333333333", "Shame!");

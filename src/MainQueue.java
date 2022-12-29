@@ -1,6 +1,6 @@
 import java.util.Iterator;
 
-public class main {
+public class MainQueue {
     public static void main(String[] args) {
         MyQueue<String> q = new MyQueue<String>(9);
 
