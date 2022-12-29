@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 
 public class MyQueue <T> implements Iterable<T> {
     private final int MAX_PRIORITY = 10;
@@ -58,43 +57,9 @@ public class MyQueue <T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new QueueIterator();
-
-    }
-
-    private class QueueIterator implements Iterator<T> {
-        private int currListIndex;
-        private Iterator<T> myQueueIterator;
-
-        public QueueIterator() {
-            currListIndex = 1;
-            myQueueIterator = q.get(currListIndex).iterator();
-        }
-
-        @Override
-        public boolean hasNext() {
-            if (myQueueIterator.hasNext()) // if the current Iterator have more items in its linked list.
-                return true;
-            for (int i = currListIndex + 1; i <= MAX_PRIORITY; i++) { //otherwise, scan the next linked lists.
-                if (!q.get(i).isEmpty()) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        @Override
-        public T next() {
-            if (myQueueIterator.hasNext()) //when the current linked list still have items or first time.
-                return myQueueIterator.next();
-            for (int i = currListIndex + 1; i <= MAX_PRIORITY; i++) { //otherwise, scan the next linked lists.
-                if (!q.get(i).isEmpty()) {
-                    currListIndex = i;
-                    myQueueIterator = q.get(currListIndex).iterator();
-                    return myQueueIterator.next();
-                }
-            }
-            throw new NoSuchElementException();
-        }
+        ArrayList<T> all = new ArrayList<T>();
+        for (int i = 1; i <= MAX_PRIORITY; i++)
+            all.addAll(q.get(i));
+        return all.iterator();
     }
 }
